@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1b9rtf5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
+  <bpmn:process id="Process_11hli44" isExecutable="true">
+    <bpmn:endEvent id="Event_0zfzg5g" name="Quote request answered">
+      <bpmn:incoming>Flow_0y2zcka</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_1" name="Quote request received">
+      <bpmn:outgoing>Flow_0pw21e2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="SendTask_1" name="Send quote">
+      <bpmn:incoming>Flow_1s764or</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y2zcka</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="ServiceTask_2" name="Generate quote" camunda:modelerTemplate="com.camunda.rpa.PDFQuoteGenerator" camunda:type="external" camunda:topic="RPA">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="productName">${product}</camunda:inputParameter>
+          <camunda:inputParameter name="count">${count}</camunda:inputParameter>
+          <camunda:inputParameter name="price">${price}</camunda:inputParameter>
+          <camunda:outputParameter name="pdfStorage">${pdfStorage}</camunda:outputParameter>
+        </camunda:inputOutput>
+        <camunda:properties>
+          <camunda:property name="bot" value="PDFQuoteGenerator" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04k3izd</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s764or</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ServiceTask_1" name="Calculate price" camunda:modelerTemplate="com.camunda.rpa.ProductPriceCalculator" camunda:type="external" camunda:topic="RPA">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="productName">${product}</camunda:inputParameter>
+          <camunda:inputParameter name="count">${count}</camunda:inputParameter>
+          <camunda:outputParameter name="price">${price}</camunda:outputParameter>
+        </camunda:inputOutput>
+        <camunda:properties>
+          <camunda:property name="bot" value="ProductPriceCalculator" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pw21e2</bpmn:incoming>
+      <bpmn:outgoing>Flow_04k3izd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0y2zcka" sourceRef="SendTask_1" targetRef="Event_0zfzg5g" />
+    <bpmn:sequenceFlow id="Flow_0pw21e2" sourceRef="StartEvent_1" targetRef="ServiceTask_1" />
+    <bpmn:sequenceFlow id="Flow_1s764or" sourceRef="ServiceTask_2" targetRef="SendTask_1" />
+    <bpmn:sequenceFlow id="Flow_04k3izd" sourceRef="ServiceTask_1" targetRef="ServiceTask_2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_11hli44">
+      <bpmndi:BPMNEdge id="Flow_04k3izd_di" bpmnElement="Flow_04k3izd">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="420" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s764or_di" bpmnElement="Flow_1s764or">
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="580" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pw21e2_di" bpmnElement="Flow_0pw21e2">
+        <di:waypoint x="205" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y2zcka_di" bpmnElement="Flow_0y2zcka">
+        <di:waypoint x="680" y="120" />
+        <di:waypoint x="742" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0zfzg5g_di" bpmnElement="Event_0zfzg5g">
+        <dc:Bounds x="742" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="725" y="145" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1w0yqt4_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="169" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="145" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mbjazf_di" bpmnElement="SendTask_1">
+        <dc:Bounds x="580" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11k5ok1_di" bpmnElement="ServiceTask_2">
+        <dc:Bounds x="420" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ywxfl8_di" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

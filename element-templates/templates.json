@@ -1,0 +1,131 @@
+[
+    {
+      "name": "Product Price Calculator",
+      "id": "com.camunda.rpa.ProductPriceCalculator",
+      "appliesTo": ["bpmn:ServiceTask"],
+      "properties": [
+        {
+          "label": "External Task Topic",
+          "type": "Hidden",
+          "value": "RPA",
+          "binding": {
+            "type": "property",
+            "name": "camunda:topic"
+          }
+        },
+        {
+          "label": "Implementation",
+          "type": "Hidden",
+          "value": "external",
+          "binding": {
+            "type": "property",
+            "name": "camunda:type"
+          }
+        },
+        {
+          "label": "Input: productName",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "productName"
+          }
+        },
+        {
+          "label": "Input: count",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "count"
+          }
+        },
+        {
+          "label": "Output: price -> Process Variable Name",
+          "type": "String",
+          "value": "price",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${price}",
+            "name": "price"
+          }
+        },
+        {
+          "label": "Bot name",
+          "type": "Hidden",
+          "value": "ProductPriceCalculator",
+          "binding": {
+            "type": "camunda:property",
+            "name": "bot"
+          }
+        }
+      ]
+    },
+    {
+      "name": "PDF Quote Generator",
+      "id": "com.camunda.rpa.PDFQuoteGenerator",
+      "appliesTo": ["bpmn:ServiceTask"],
+      "properties": [
+        {
+          "label": "External Task Topic",
+          "type": "Hidden",
+          "value": "RPA",
+          "binding": {
+            "type": "property",
+            "name": "camunda:topic"
+          }
+        },
+        {
+          "label": "Implementation",
+          "type": "Hidden",
+          "value": "external",
+          "binding": {
+            "type": "property",
+            "name": "camunda:type"
+          }
+        },
+        {
+          "label": "Input: productName",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "productName"
+          }
+        },
+        {
+          "label": "Input: count",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "count"
+          }
+        },
+        {
+          "label": "Input: price",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "price"
+          }
+        },
+        {
+          "label": "Output: pdfStorage --> Process Variable Name",
+          "type": "String",
+          "value": "pdfStorage",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${pdfStorage}",
+            "name": "price"
+          }
+        },
+        {
+          "label": "Bot name",
+          "type": "Hidden",
+          "value": "PDFQuoteGenerator",
+          "binding": {
+            "type": "camunda:property",
+            "name": "bot"
+          }
+        }
+      ]
+    }
+  ]
+  
